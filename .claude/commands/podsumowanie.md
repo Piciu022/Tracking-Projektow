@@ -1,7 +1,6 @@
 ---
-description: Zrób tygodniowe podsumowanie zmian we wszystkich śledzonych projektach
+description: Zaktualizuj dashboard - drzewo zmian + tygodniowe podsumowanie dla wszystkich projektów
 ---
 
-Wykonaj procedurę "Instrukcja dla Claude: tygodniowe podsumowanie zmian" opisaną w `CLAUDE.md`
-w tym repozytorium — krok po kroku, dla wszystkich projektów z `projects.yaml`. Pokaż mi szkice
-podsumowań do akceptacji przed zapisem i pushem.
+Wykonaj Krok A, Krok B i Krok D z `CLAUDE.md` w tym repozytorium, dla wszystkich projektów z
+`projects.yaml`. Pokaż mi szkice podsumowań do akceptacji przed zapisem i pushem (Krok D).

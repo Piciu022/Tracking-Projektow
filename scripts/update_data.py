@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
 """
-Buduje data/activity.json na podstawie historii commitów w projects.yaml.
+Buduje data/activity.json na podstawie LOKALNEJ historii commitów (bez GitHub API,
+bez tokena) - czyta klony repozytoriów wskazane w projects.yaml (`local_path`).
+
+Kod źródłowy śledzonych projektów może być całkowicie prywatny - ten skrypt nigdy nie
+wychodzi do sieci, więc nic z niego nie "wycieka" do publicznego repo Tracking-Projektow
+poza tym, co jawnie wylądowało w data/activity.json (podsumowania commitów, nie treść kodu).
 
 Bez żadnego AI: parsuje konwencjonalne prefiksy commitów (feat:/fix:/napraw:/eksperyment:...)
 i rekonstruuje "drzewo" zmian, grupując commity po branchu z którego zostały zmergowane
 (na podstawie commitów merge, np. "Merge branch 'feature/x' do dev").
 
-Wymaga (opcjonalnie) tokena GitHub w zmiennej środowiskowej REPOS_TOKEN - potrzebny tylko
-dla repozytoriów prywatnych. Dla publicznych repo skrypt działa też bez tokena
-(z niższym limitem zapytań API).
+Uruchamiane ręcznie (lokalnie), zwykle w ramach procedury z CLAUDE.md - nie w CI, bo CI nie
+ma dostępu do tych lokalnych klonów.
 """
 
 import json
-import os
 import re
+import subprocess
 import sys
-import urllib.error
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -26,8 +28,6 @@ ROOT = Path(__file__).resolve().parent.parent
 PROJECTS_FILE = ROOT / "projects.yaml"
 OUTPUT_FILE = ROOT / "data" / "activity.json"
 FEED_LIMIT = 40
-
-TOKEN = os.environ.get("REPOS_TOKEN", "").strip()
 
 TYPE_MAP = [
     (r"^feat", "feat", "✨", "Nowa funkcja"),
@@ -63,38 +63,6 @@ def humanize_branch(branch_name: str):
     return icon, label
 
 
-def api_get(url: str):
-    req = urllib.request.Request(url)
-    req.add_header("Accept", "application/vnd.github+json")
-    req.add_header("X-GitHub-Api-Version", "2022-11-28")
-    if TOKEN:
-        req.add_header("Authorization", f"Bearer {TOKEN}")
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        body = e.read().decode("utf-8", errors="replace")
-        print(f"  ! GitHub API {e.code} dla {url}: {body[:300]}", file=sys.stderr)
-        return None
-    except urllib.error.URLError as e:
-        print(f"  ! Błąd sieci dla {url}: {e}", file=sys.stderr)
-        return None
-
-
-def fetch_commits(github_repo: str, branch: str, limit: int):
-    url = (
-        f"https://api.github.com/repos/{github_repo}/commits"
-        f"?sha={branch}&per_page={min(limit, 100)}"
-    )
-    data = api_get(url)
-    if data is None:
-        return None
-    if isinstance(data, dict) and data.get("message"):
-        print(f"  ! {github_repo}: {data.get('message')}", file=sys.stderr)
-        return None
-    return data
-
-
 MERGE_BRANCH_RE = re.compile(r"Merge branch '([^']+)'")
 MERGE_PR_RE = re.compile(r"Merge pull request #\d+ from [^/]+/(.+)")
 
@@ -104,43 +72,72 @@ def extract_branch_name(message: str):
     return m.group(1).strip() if m else None
 
 
+def fetch_local_commits(local_path: Path, branch: str, limit: int):
+    """Czyta historię commitów lokalnym `git log` - bez sieci, bez tokena."""
+    if not (local_path / ".git").exists():
+        return None, f"Nie znaleziono repo git w {local_path}"
+
+    fmt = "%H|%P|%aI|%s"
+    result = subprocess.run(
+        ["git", "-C", str(local_path), "log", branch, f"--pretty=format:{fmt}", "-n", str(limit)],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None, f"git log nie powiódł się dla {local_path}@{branch}: {result.stderr.strip()}"
+
+    commits = []
+    for line in result.stdout.splitlines():
+        if not line:
+            continue
+        sha, parents, date, subject = line.split("|", 3)
+        commits.append(
+            {
+                "sha": sha,
+                "is_merge": len(parents.split()) > 1,
+                "date": date,
+                "subject": subject,
+            }
+        )
+    return commits, None
+
+
 def build_project_data(project: dict):
     github_repo = project["github"]
     branch = project.get("branch", "main")
     limit = project.get("history_limit", 100)
-    print(f"-> {project['name']} ({github_repo}@{branch})")
+    local_path = (ROOT / project["local_path"]).resolve()
+    print(f"-> {project['name']} ({local_path}@{branch})")
 
-    raw_commits = fetch_commits(github_repo, branch, limit)
-    if not raw_commits:
+    raw_commits, error = fetch_local_commits(local_path, branch, limit)
+    if error:
+        print(f"  ! {error}", file=sys.stderr)
         return {
             **{k: project[k] for k in ("id", "name", "description", "status", "tech", "github")},
             "branch": branch,
             "last_commit_at": None,
             "groups": [],
-            "error": "Brak dostępu do historii commitów (sprawdź REPOS_TOKEN / uprawnienia).",
+            "error": error,
         }
 
     commits = []
     for c in raw_commits:
-        message = c["commit"]["message"]
-        subject = message.split("\n", 1)[0].strip()
-        is_merge = len(c.get("parents", [])) > 1
-        type_key, icon, label = classify(subject)
+        type_key, icon, label = classify(c["subject"])
         commits.append(
             {
                 "sha": c["sha"],
                 "short_sha": c["sha"][:7],
-                "subject": subject,
-                "date": c["commit"]["author"]["date"],
-                "url": c["html_url"],
-                "is_merge": is_merge,
+                "subject": c["subject"],
+                "date": c["date"],
+                "url": f"https://github.com/{github_repo}/commit/{c['sha']}",
+                "is_merge": c["is_merge"],
                 "type_key": type_key,
                 "type_icon": icon,
                 "type_label": label,
             }
         )
 
-    # API zwraca najnowsze najpierw - do rekonstrukcji drzewa idziemy od najstarszego.
+    # `git log` zwraca najnowsze najpierw - do rekonstrukcji drzewa idziemy od najstarszego.
     commits.reverse()
 
     groups = []

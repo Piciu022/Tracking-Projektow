@@ -1,50 +1,53 @@
-# Instrukcja dla Claude: tygodniowe podsumowanie zmian
+# Instrukcja dla Claude: aktualizacja dashboardu
 
-Ten plik jest automatycznie wczytywany przez Claude Code w tym repo. Gdy Piotr napisze coś w
-stylu **"zrób podsumowanie tygodnia"**, **"podsumuj co się zmieniło"** albo podobne — wykonaj
-poniższą procedurę. To NIE jest zautomatyzowane (nie ma tu żadnego GitHub Action ani klucza
-API) — dzieje się tylko wtedy, gdy Piotr o to poprosi, ręcznie, w sesji Claude Code.
+Ten plik jest automatycznie wczytywany przez Claude Code w tym repo. Nie ma tu żadnej
+automatyzacji w CI (nie ma GitHub Action, nie ma klucza API) — wszystko dzieje się ręcznie,
+gdy Piotr o to poprosi w sesji Claude Code, np.:
 
-## Cel
+- "zaktualizuj dashboard" / "wrzuć co ostatnio zrobiłem" → zrób **Krok A**.
+- "zrób podsumowanie tygodnia" / "podsumuj co się zmieniło" (albo `/podsumowanie`) → zrób
+  **Krok A** + **Krok B**.
+- "dopisz do [projektu] że zrobiłem X, to boczny task, nie ma tego na gicie" → zrób
+  **Krok C**.
 
-Zamienić surowe commity z 4 projektów (`projects.yaml`) na krótkie, ludzkie podsumowanie po
-polsku — takie, które szef przeczyta i zrozumie bez znajomości kodu. Surowe drzewo commitów
-(`data/activity.json`, generowane automatycznie przez GitHub Action) zostaje na stronie jako
-"szczegóły techniczne" — to nie ma go zastąpić, tylko dodać nad nim ludzką warstwę.
+Kod źródłowy śledzonych projektów (`Codeshare-assistant`, `Slots_Monitoring`, `Slots_MK`) jest
+**prywatny** — ten dashboard (repo `Tracking-Projektow`) jest **publiczny**. Nigdy nie kopiuj do
+tego repo surowego kodu, treści plików, pełnych diffów, nazw wewnętrznych zmiennych/secretów
+itp. — tylko krótkie, ludzkie opisy tego, co się zmieniło. Jeśli commit message albo diff
+zawiera coś wrażliwego (klucz, dane, nazwę wewnętrznego systemu, którą lepiej nie ujawniać
+publicznie), sparafrazuj to ogólnie albo zapytaj Piotra, zanim to opublikujesz.
 
-## Procedura
+## Krok A — odśwież surowe drzewo (`data/activity.json`)
 
-1. Wczytaj `projects.yaml` (pola: `id`, `name`, `branch`, `local_path`) i `data/summaries.json`
-   (pole `projects.<id>.last_summarized_sha`, jeśli istnieje).
+```bash
+cd "/Users/piotradamski/Programowanie/lot/Tracking-Projektów"
+python3 scripts/update_data.py
+```
 
-2. Dla każdego projektu:
+Skrypt czyta `projects.yaml` i lokalne klony (`local_path`) — bez sieci, bez tokena. Nadpisuje
+`data/activity.json` na podstawie **aktualnego stanu lokalnych branchy** (nie GitHuba — jeśli
+lokalna kopia jest za zdalną, to celowe: dashboard ma pokazywać co Piotr faktycznie zrobił na
+tej maszynie).
+
+## Krok B — napisz ludzkie podsumowanie ("Co nowego")
+
+1. Wczytaj `data/summaries.json` (pole `projects.<id>.last_summarized_sha`, jeśli istnieje).
+2. Dla każdego projektu z `projects.yaml`:
    ```bash
-   cd "<local_path z projects.yaml, relatywnie do tego repo>"
-   git fetch --quiet  # jeśli repo ma remote i jest sens sprawdzić najnowszy stan
+   cd "<local_path>"
    git log <last_summarized_sha>..<branch> --pretty=format:'%H|%ai|%s' --stat
    ```
-   Jeśli `last_summarized_sha` nie istnieje (pierwsze uruchomienie dla danego projektu), weź
-   commity z ostatnich 7 dni: `git log <branch> --since="7 days ago" ...`.
-   Jeśli commitów od ostatniego podsumowania brak — pomiń ten projekt (nie twórz wpisu "brak
-   zmian", po prostu nic nie dopisuj).
-
-3. Przeczytaj commit messages i (dla nieoczywistych zmian) `git show <sha> --stat` / diff, żeby
-   zrozumieć co faktycznie się zmieniło — nie tłumacz dosłownie komunikatów commitów, zrozum
-   **efekt** zmiany.
-
-4. Napisz podsumowanie: 3-6 zdań, po polsku, językiem dla nietechnicznego odbiorcy (szef).
-   - Mów o efekcie/wartości ("teraz można porównać dowolną liczbę okresów naraz"), nie o
-     implementacji ("zrefaktoryzowano _build_color_lut").
-   - Bez żargonu programistycznego, bez nazw funkcji/plików, bez emoji-spamu.
-   - Jeśli w tygodniu było dużo drobnych poprawek i jedna większa funkcja — jedno zdanie o
-     poprawkach zbiorczo, więcej miejsca na główną funkcję.
-   - Nie koloryzuj i nie zmyślaj — jeśli tydzień był głównie o naprawach błędów, tak napisz.
-
-5. **Pokaż szkic podsumowań Piotrowi w czacie i poczekaj na potwierdzenie/poprawki** — to
-   trafia na stronę widoczną dla szefa, więc zanim to zapiszesz i wypchniesz, Piotr powinien to
-   zobaczyć i ewentualnie poprawić ton/treść. Nie commituj i nie pushuj bez tego kroku.
-
-6. Po akceptacji, dla każdego zaktualizowanego projektu dopisz wpis do `data/summaries.json`:
+   Brak `last_summarized_sha` (pierwsze uruchomienie) → weź commity z ostatnich 7 dni
+   (`--since="7 days ago"`). Brak nowych commitów → pomiń projekt, nic nie dopisuj.
+3. Przeczytaj commit messages i (dla nieoczywistych zmian) diffy, żeby zrozumieć **efekt**
+   zmiany, nie tylko jej treść.
+4. Napisz 3-6 zdań po polsku, językiem dla nietechnicznego odbiorcy (szef): efekt/wartość, nie
+   implementacja; bez żargonu, nazw funkcji/plików, bez emoji-spamu; bez koloryzowania — jeśli
+   tydzień był głównie o naprawach, tak napisz.
+5. **Pokaż szkice Piotrowi i poczekaj na akceptację** — to trafia na publiczną stronę, więc
+   zanim to zapiszesz, powinien to zobaczyć i ewentualnie poprawić. Nie commituj bez tego.
+6. Po akceptacji dopisz wpis **na początek** listy `entries` dla każdego zaktualizowanego
+   projektu (nie nadpisuj starych wpisów) i zaktualizuj `last_summarized_sha`:
    ```json
    {
      "projects": {
@@ -63,14 +66,27 @@ polsku — takie, które szef przeczyta i zrozumie bez znajomości kodu. Surowe 
      }
    }
    ```
-   Nowe wpisy dopisuj na **początek** listy `entries` (najnowsze pierwsze). Nie nadpisuj
-   wcześniejszych wpisów.
 
-7. `git add data/summaries.json && git commit -m "podsumowanie tygodnia: <lista projektów>" &&
-   git push` w repo `Tracking-Projektów` (**nie** w repo śledzonych projektów — tam niczego nie
-   commitujemy). Push do `main` odświeży stronę na Cloudflare Pages automatycznie.
+## Krok C — boczny task (coś, czego nie ma na gicie)
 
-## Uwaga
+Piotr czasem robi coś, co nie zostawia commita (e-mail, plik Excel dla kogoś, rozmowa,
+konfiguracja w Databricks) i chce, żeby to też było widoczne na dashboardzie. Wtedy:
 
-`data/activity.json` (surowe drzewo) generuje wyłącznie `.github/workflows/update-dashboard.yml`
-przez `scripts/update_data.py` — nie edytuj go ręcznie i nie nadpisuj przy tej procedurze.
+1. Zapytaj do którego projektu to przypisać (albo czy to coś ogólne — wtedy można użyć
+   `project_id: "inne"` jako kontenera na zadania niezwiązane z konkretnym repo).
+2. Dopisz wpis do `data/summaries.json` tak jak w Kroku B (bez `last_summarized_sha` w tym
+   wpisie, bo nie wynika z commitów) — pole `commit_count` ustaw na `0` albo pomiń.
+3. Pokaż szkic do akceptacji, tak jak w Kroku B.
+
+## Krok D — zapisz i wypchnij
+
+Po akceptacji (Krok B i/albo C):
+
+```bash
+cd "/Users/piotradamski/Programowanie/lot/Tracking-Projektów"
+git add data/activity.json data/summaries.json
+git commit -m "aktualizacja dashboardu: <krótki opis>"
+git push
+```
+
+Repo jest publiczne, więc `git push` od razu odświeża stronę na GitHub Pages (patrz README.md).

@@ -1,9 +1,12 @@
-# Lista śledzonych projektów. Dodanie nowego projektu = dodanie kolejnego wpisu tutaj
-# (repo może być prywatne albo publiczne - liczy się tylko dostęp tokena z sekretu REPOS_TOKEN).
+# Lista śledzonych projektów. Dodanie nowego projektu = dodanie kolejnego wpisu tutaj.
 #
-# local_path: ścieżka na tym Macu do lokalnego klonu - używana WYŁĄCZNIE przy ręcznym
-# tygodniowym podsumowaniu (patrz CLAUDE.md). Skrypt scripts/update_data.py (GitHub Action)
-# jej nie czyta - on i tak pyta GitHub API, więc ten klucz jest dla niego neutralny.
+# Kod źródłowy tych projektów może być całkowicie prywatny - scripts/update_data.py czyta go
+# WYŁĄCZNIE lokalnie z dysku (local_path), nigdy przez GitHub API, więc nie trzeba żadnego
+# tokena. Jawnie publiczny jest tylko dashboard (to repo), nie śledzone projekty.
+#
+# local_path: ścieżka na tym Macu do lokalnego klonu (relatywnie do tego repo).
+# github/branch: używane tylko do zbudowania linku do commita (https://github.com/<github>/commit/<sha>)
+# - jeśli repo jest prywatne, taki link po prostu nie zadziała dla kogoś bez dostępu.
 projects:
   - id: notam-reader
     name: "NOTAM Reader"
