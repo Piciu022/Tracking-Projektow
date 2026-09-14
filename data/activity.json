@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T12:04:31+00:00",
+  "generated_at": "2026-09-14T12:13:40+00:00",
   "projects": [
     {
       "id": "slots-mk",
@@ -1770,63 +1770,26 @@
       ]
     },
     {
-      "id": "notam-reader",
-      "name": "NOTAM Reader",
-      "description": "Pobiera, dekoduje i dopasowuje komunikaty NOTAM do konkretnych rejsów z rozkładu lotów. Automatyzuje sprawdzanie, które NOTAMy wpływają na zaplanowaną trasę lotu w danym oknie czasowym, odciążając dyspozytorów i pilotów.",
+      "id": "zmiany-rozkladowe",
+      "name": "Zmiany Rozkładowe",
+      "description": "Szczegóły w przygotowaniu.",
       "status": "aktywny",
-      "tech": [
-        "Python",
-        "Flask",
-        "SQLite"
-      ],
-      "github": "Piciu022/NOTAM-READER",
+      "tech": [],
+      "github": null,
       "branch": "main",
-      "last_commit_at": "2026-02-06T18:10:13+01:00",
-      "groups": [
-        {
-          "kind": "direct",
-          "branch_name": null,
-          "icon": "🕓",
-          "label": "Najnowsze zmiany (jeszcze nie zmergowane / bezpośrednio na branchu)",
-          "merged_at": "2026-02-06T18:10:13+01:00",
-          "merge_url": null,
-          "commits": [
-            {
-              "sha": "14b561465aa101948078a2c83d1eb3608d05250a",
-              "short_sha": "14b5614",
-              "subject": "opis dla Leszka",
-              "date": "2026-02-06T18:10:13+01:00",
-              "url": "https://github.com/Piciu022/NOTAM-READER/commit/14b561465aa101948078a2c83d1eb3608d05250a",
-              "is_merge": false,
-              "type_key": "other",
-              "type_icon": "•",
-              "type_label": "Zmiana"
-            },
-            {
-              "sha": "293c82108a2d3595f094fed349fb71098254dbce",
-              "short_sha": "293c821",
-              "subject": "test_flight_schedule",
-              "date": "2026-02-06T18:00:49+01:00",
-              "url": "https://github.com/Piciu022/NOTAM-READER/commit/293c82108a2d3595f094fed349fb71098254dbce",
-              "is_merge": false,
-              "type_key": "test",
-              "type_icon": "✅",
-              "type_label": "Testy"
-            },
-            {
-              "sha": "c408d9f0296cd301f5a4b3ad485fef3ba29109d3",
-              "short_sha": "c408d9f",
-              "subject": "add to git",
-              "date": "2026-02-06T17:55:48+01:00",
-              "url": "https://github.com/Piciu022/NOTAM-READER/commit/c408d9f0296cd301f5a4b3ad485fef3ba29109d3",
-              "is_merge": false,
-              "type_key": "other",
-              "type_icon": "•",
-              "type_label": "Zmiana"
-            }
-          ]
-        }
-      ]
+      "last_commit_at": null,
+      "groups": []
+    },
+    {
+      "id": "avih-pnr-check",
+      "name": "AVIH / PNR - Check",
+      "description": "Szczegóły w przygotowaniu.",
+      "status": "aktywny",
+      "tech": [],
+      "github": null,
+      "branch": "main",
+      "last_commit_at": null,
+      "groups": []
     }
   ],
   "feed": [

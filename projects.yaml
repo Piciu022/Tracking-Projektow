@@ -8,19 +8,6 @@
 # github/branch: używane tylko do zbudowania linku do commita (https://github.com/<github>/commit/<sha>)
 # - jeśli repo jest prywatne, taki link po prostu nie zadziała dla kogoś bez dostępu.
 projects:
-  - id: notam-reader
-    name: "NOTAM Reader"
-    description: >
-      Pobiera, dekoduje i dopasowuje komunikaty NOTAM do konkretnych rejsów z rozkładu lotów.
-      Automatyzuje sprawdzanie, które NOTAMy wpływają na zaplanowaną trasę lotu w danym oknie
-      czasowym, odciążając dyspozytorów i pilotów.
-    status: aktywny
-    tech: ["Python", "Flask", "SQLite"]
-    github: "Piciu022/NOTAM-READER"
-    branch: "main"
-    history_limit: 100
-    local_path: "../NOTAM READER"
-
   - id: codeshare-assistant
     name: "Codeshare Assistant"
     description: >
@@ -59,3 +46,20 @@ projects:
     branch: "main"
     history_limit: 100
     local_path: "../Slots_MK/app"
+
+  # Poniższe dwa panele nie mają (jeszcze) lokalnego repo - brak local_path oznacza, że
+  # scripts/update_data.py nie próbuje czytać drzewa commitów, tylko pokazuje sam kafelek +
+  # ewentualne ręczne podsumowania z data/summaries.json (Krok C w CLAUDE.md).
+  - id: zmiany-rozkladowe
+    name: "Zmiany Rozkładowe"
+    description: >
+      Szczegóły w przygotowaniu.
+    status: aktywny
+    tech: []
+
+  - id: avih-pnr-check
+    name: "AVIH / PNR - Check"
+    description: >
+      Szczegóły w przygotowaniu.
+    status: aktywny
+    tech: []

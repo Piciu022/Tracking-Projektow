@@ -103,10 +103,28 @@ def fetch_local_commits(local_path: Path, branch: str, limit: int):
 
 
 def build_project_data(project: dict):
-    github_repo = project["github"]
+    github_repo = project.get("github")
     branch = project.get("branch", "main")
     limit = project.get("history_limit", 100)
-    local_path = (ROOT / project["local_path"]).resolve()
+    local_path_raw = project.get("local_path")
+
+    if not local_path_raw:
+        # Panel czysto ręczny (jeszcze bez repo) - bez drzewa commitów, tylko kafelek +
+        # ewentualne ręczne podsumowania z data/summaries.json (Krok C w CLAUDE.md).
+        print(f"-> {project['name']} (bez local_path - panel ręczny)")
+        return {
+            "id": project["id"],
+            "name": project["name"],
+            "description": project["description"].strip(),
+            "status": project["status"],
+            "tech": project["tech"],
+            "github": github_repo,
+            "branch": branch,
+            "last_commit_at": None,
+            "groups": [],
+        }
+
+    local_path = (ROOT / local_path_raw).resolve()
     print(f"-> {project['name']} ({local_path}@{branch})")
 
     raw_commits, error = fetch_local_commits(local_path, branch, limit)
@@ -129,7 +147,7 @@ def build_project_data(project: dict):
                 "short_sha": c["sha"][:7],
                 "subject": c["subject"],
                 "date": c["date"],
-                "url": f"https://github.com/{github_repo}/commit/{c['sha']}",
+                "url": f"https://github.com/{github_repo}/commit/{c['sha']}" if github_repo else None,
                 "is_merge": c["is_merge"],
                 "type_key": type_key,
                 "type_icon": icon,

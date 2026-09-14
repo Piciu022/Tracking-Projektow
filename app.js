@@ -135,7 +135,11 @@ function renderProjectCard(templates, project, summaryData) {
   renderSummaryBlock(article, templates.olderSummary, summaryData);
 
   const link = article.querySelector(".github-link");
-  link.href = `https://github.com/${project.github}`;
+  if (project.github) {
+    link.href = `https://github.com/${project.github}`;
+  } else {
+    link.remove(); // panel ręczny, bez repo do podlinkowania
+  }
 
   const toggleBtn = article.querySelector(".toggle-tree");
   const treeWrap = article.querySelector(".tree-wrap");
@@ -183,7 +187,6 @@ function renderFeedItem(template, item) {
 }
 
 async function main() {
-  const updatedAtEl = document.getElementById("updated-at");
   const projectsEl = document.getElementById("projects");
   const feedEl = document.getElementById("feed");
 
@@ -193,7 +196,6 @@ async function main() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     data = await res.json();
   } catch (err) {
-    updatedAtEl.textContent = "Nie udało się wczytać danych.";
     projectsEl.innerHTML = `<p class="error-state">Błąd wczytywania ${DATA_URL}: ${err.message}</p>`;
     return;
   }
@@ -207,8 +209,6 @@ async function main() {
   } catch (err) {
     console.warn(`Nie udało się wczytać ${SUMMARIES_URL}:`, err);
   }
-
-  updatedAtEl.textContent = `Ostatnia aktualizacja: ${fmtDateTime(data.generated_at)}`;
 
   const templates = {
     card: document.getElementById("project-card-template"),

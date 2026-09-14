@@ -67,12 +67,6 @@ body {
   font-size: 0.95rem;
 }
 
-.updated-at {
-  margin: 0;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
 .container {
   max-width: 1080px;
   margin: 0 auto;
