@@ -1,0 +1,139 @@
+{
+  "generated_at": "2026-09-14T11:07:21+00:00",
+  "projects": [
+    {
+      "id": "notam-reader",
+      "name": "NOTAM Reader",
+      "description": "Pobiera, dekoduje i dopasowuje komunikaty NOTAM do konkretnych rejsów z rozkładu lotów. Automatyzuje sprawdzanie, które NOTAMy wpływają na zaplanowaną trasę lotu w danym oknie czasowym, odciążając dyspozytorów i pilotów.",
+      "status": "aktywny",
+      "tech": [
+        "Python",
+        "Flask",
+        "SQLite"
+      ],
+      "github": "Piciu022/NOTAM-READER",
+      "branch": "main",
+      "last_commit_at": "2026-02-06T17:10:13Z",
+      "groups": [
+        {
+          "kind": "direct",
+          "branch_name": null,
+          "icon": "🕓",
+          "label": "Najnowsze zmiany (jeszcze nie zmergowane / bezpośrednio na branchu)",
+          "merged_at": "2026-02-06T17:10:13Z",
+          "merge_url": null,
+          "commits": [
+            {
+              "sha": "14b561465aa101948078a2c83d1eb3608d05250a",
+              "short_sha": "14b5614",
+              "subject": "opis dla Leszka",
+              "date": "2026-02-06T17:10:13Z",
+              "url": "https://github.com/Piciu022/NOTAM-READER/commit/14b561465aa101948078a2c83d1eb3608d05250a",
+              "is_merge": false,
+              "type_key": "other",
+              "type_icon": "•",
+              "type_label": "Zmiana"
+            },
+            {
+              "sha": "293c82108a2d3595f094fed349fb71098254dbce",
+              "short_sha": "293c821",
+              "subject": "test_flight_schedule",
+              "date": "2026-02-06T17:00:49Z",
+              "url": "https://github.com/Piciu022/NOTAM-READER/commit/293c82108a2d3595f094fed349fb71098254dbce",
+              "is_merge": false,
+              "type_key": "test",
+              "type_icon": "✅",
+              "type_label": "Testy"
+            },
+            {
+              "sha": "c408d9f0296cd301f5a4b3ad485fef3ba29109d3",
+              "short_sha": "c408d9f",
+              "subject": "add to git",
+              "date": "2026-02-06T16:55:48Z",
+              "url": "https://github.com/Piciu022/NOTAM-READER/commit/c408d9f0296cd301f5a4b3ad485fef3ba29109d3",
+              "is_merge": false,
+              "type_key": "other",
+              "type_icon": "•",
+              "type_label": "Zmiana"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "codeshare-assistant",
+      "name": "Codeshare Assistant",
+      "description": "Aplikacja Streamlit (Databricks App) do analizy połączeń codeshare. Obecnie mapa bazowa (BaseMap), w planach słownik minimalnych czasów przesiadki i automatyczne dopasowywanie połączeń.\n",
+      "status": "aktywny",
+      "tech": [
+        "Python",
+        "Streamlit",
+        "Databricks Apps"
+      ],
+      "github": "Piciu022/Codeshare-assistant",
+      "branch": "main",
+      "last_commit_at": null,
+      "groups": [],
+      "error": "Brak dostępu do historii commitów (sprawdź REPOS_TOKEN / uprawnienia)."
+    },
+    {
+      "id": "slots-monitoring",
+      "name": "Slots Monitoring (DOR App)",
+      "description": "Dashboard do monitorowania wykonania slotów i rejsów - czasy blokowe, kody i przyczyny opóźnień, filtry dat i lotnisk, wykrywanie systematycznych przekroczeń bloku.\n",
+      "status": "aktywny",
+      "tech": [
+        "Python",
+        "Streamlit"
+      ],
+      "github": "Piciu022/Slots_Monitoring",
+      "branch": "dev",
+      "last_commit_at": null,
+      "groups": [],
+      "error": "Brak dostępu do historii commitów (sprawdź REPOS_TOKEN / uprawnienia)."
+    }
+  ],
+  "feed": [
+    {
+      "project_id": "notam-reader",
+      "project_name": "NOTAM Reader",
+      "branch_label": null,
+      "sha": "14b561465aa101948078a2c83d1eb3608d05250a",
+      "short_sha": "14b5614",
+      "subject": "opis dla Leszka",
+      "date": "2026-02-06T17:10:13Z",
+      "url": "https://github.com/Piciu022/NOTAM-READER/commit/14b561465aa101948078a2c83d1eb3608d05250a",
+      "is_merge": false,
+      "type_key": "other",
+      "type_icon": "•",
+      "type_label": "Zmiana"
+    },
+    {
+      "project_id": "notam-reader",
+      "project_name": "NOTAM Reader",
+      "branch_label": null,
+      "sha": "293c82108a2d3595f094fed349fb71098254dbce",
+      "short_sha": "293c821",
+      "subject": "test_flight_schedule",
+      "date": "2026-02-06T17:00:49Z",
+      "url": "https://github.com/Piciu022/NOTAM-READER/commit/293c82108a2d3595f094fed349fb71098254dbce",
+      "is_merge": false,
+      "type_key": "test",
+      "type_icon": "✅",
+      "type_label": "Testy"
+    },
+    {
+      "project_id": "notam-reader",
+      "project_name": "NOTAM Reader",
+      "branch_label": null,
+      "sha": "c408d9f0296cd301f5a4b3ad485fef3ba29109d3",
+      "short_sha": "c408d9f",
+      "subject": "add to git",
+      "date": "2026-02-06T16:55:48Z",
+      "url": "https://github.com/Piciu022/NOTAM-READER/commit/c408d9f0296cd301f5a4b3ad485fef3ba29109d3",
+      "is_merge": false,
+      "type_key": "other",
+      "type_icon": "•",
+      "type_label": "Zmiana"
+    }
+  ]
+}

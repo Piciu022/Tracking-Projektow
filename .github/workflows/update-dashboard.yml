@@ -1,0 +1,46 @@
+name: Aktualizacja danych dashboardu
+
+on:
+  schedule:
+    # 05:00 UTC = ok. 07:00 w Polsce (zimą) / 07:00-08:00 (czas letni)
+    - cron: "0 5 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "projects.yaml" # np. dodanie nowego projektu - przelicz dashboard od razu
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ustaw Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Zainstaluj zależności
+        run: pip install -r scripts/requirements.txt
+
+      - name: Wygeneruj data/activity.json z historii commitów
+        env:
+          REPOS_TOKEN: ${{ secrets.REPOS_TOKEN }}
+        run: python scripts/update_data.py
+
+      - name: Commit i push, jeśli coś się zmieniło
+        run: |
+          git config user.name "dashboard-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/activity.json
+          if git diff --cached --quiet; then
+            echo "Brak zmian - nic do zacommitowania."
+          else
+            git commit -m "chore: aktualizacja danych dashboardu"
+            git push
+          fi

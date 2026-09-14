@@ -1,0 +1,37 @@
+# Lista śledzonych projektów. Dodanie nowego projektu = dodanie kolejnego wpisu tutaj
+# (repo może być prywatne albo publiczne - liczy się tylko dostęp tokena z sekretu REPOS_TOKEN).
+projects:
+  - id: notam-reader
+    name: "NOTAM Reader"
+    description: >
+      Pobiera, dekoduje i dopasowuje komunikaty NOTAM do konkretnych rejsów z rozkładu lotów.
+      Automatyzuje sprawdzanie, które NOTAMy wpływają na zaplanowaną trasę lotu w danym oknie
+      czasowym, odciążając dyspozytorów i pilotów.
+    status: aktywny
+    tech: ["Python", "Flask", "SQLite"]
+    github: "Piciu022/NOTAM-READER"
+    branch: "main"
+    history_limit: 100
+
+  - id: codeshare-assistant
+    name: "Codeshare Assistant"
+    description: >
+      Aplikacja Streamlit (Databricks App) do analizy połączeń codeshare. Obecnie mapa bazowa
+      (BaseMap), w planach słownik minimalnych czasów przesiadki i automatyczne dopasowywanie
+      połączeń.
+    status: aktywny
+    tech: ["Python", "Streamlit", "Databricks Apps"]
+    github: "Piciu022/Codeshare-assistant"
+    branch: "main"
+    history_limit: 100
+
+  - id: slots-monitoring
+    name: "Slots Monitoring (DOR App)"
+    description: >
+      Dashboard do monitorowania wykonania slotów i rejsów - czasy blokowe, kody i przyczyny
+      opóźnień, filtry dat i lotnisk, wykrywanie systematycznych przekroczeń bloku.
+    status: aktywny
+    tech: ["Python", "Streamlit"]
+    github: "Piciu022/Slots_Monitoring"
+    branch: "dev"
+    history_limit: 100

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Projekty — panel przeglądowy</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>Projekty</h1>
+      <p class="subtitle">Nad czym teraz pracuję i co ostatnio zmieniło się w każdym projekcie</p>
+      <p class="updated-at" id="updated-at">Wczytywanie danych…</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="projects" class="projects-grid" aria-label="Projekty"></section>
+
+    <section class="feed-section" aria-label="Ostatnia aktywność">
+      <h2>Ostatnia aktywność (wszystkie projekty)</h2>
+      <ol id="feed" class="feed-list"></ol>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Dane generowane automatycznie z historii commitów na GitHubie. Nic tu nie jest pisane ręcznie.</p>
+  </footer>
+
+  <template id="project-card-template">
+    <article class="project-card">
+      <div class="project-card-head">
+        <h3 class="project-name"></h3>
+        <span class="status-badge"></span>
+      </div>
+      <p class="project-description"></p>
+      <div class="tech-chips"></div>
+      <p class="last-activity"></p>
+      <div class="project-actions">
+        <a class="github-link" target="_blank" rel="noopener">Repozytorium na GitHubie ↗</a>
+        <button class="toggle-tree" type="button" aria-expanded="false">Pokaż drzewo zmian ▾</button>
+      </div>
+      <div class="tree-wrap" hidden>
+        <ol class="tree"></ol>
+      </div>
+    </article>
+  </template>
+
+  <template id="branch-group-template">
+    <li class="branch-group">
+      <button class="branch-toggle" type="button" aria-expanded="false">
+        <span class="branch-caret">▸</span>
+        <span class="branch-icon"></span>
+        <span class="branch-label"></span>
+        <span class="branch-meta"></span>
+      </button>
+      <ol class="commit-list" hidden></ol>
+    </li>
+  </template>
+
+  <template id="commit-item-template">
+    <li class="commit-item">
+      <span class="commit-icon"></span>
+      <a class="commit-subject" target="_blank" rel="noopener"></a>
+      <span class="commit-date"></span>
+    </li>
+  </template>
+
+  <template id="feed-item-template">
+    <li class="feed-item">
+      <span class="feed-icon"></span>
+      <div class="feed-body">
+        <a class="feed-subject" target="_blank" rel="noopener"></a>
+        <div class="feed-meta"></div>
+      </div>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
