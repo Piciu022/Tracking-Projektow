@@ -53,7 +53,8 @@ projects:
   - id: zmiany-rozkladowe
     name: "Zmiany Rozkładowe"
     description: >
-      Szczegóły w przygotowaniu.
+      Utworzenie raportu / aplikacji, która będzie rozsyłała listę zmian wykonanych w
+      ubiegłym tygodniu, z podziałem na kierunki zgodowe.
     status: aktywny
     tech: []
 

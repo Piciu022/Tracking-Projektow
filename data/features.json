@@ -94,7 +94,7 @@
       ]
     },
     "zmiany-rozkladowe": {
-      "waiting_on": "",
+      "waiting_on": "Oczekiwanie na uzyskanie danych poprzez raport z aplikacji Sched Connect.",
       "features": []
     },
     "avih-pnr-check": {

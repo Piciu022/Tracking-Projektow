@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T12:51:07+00:00",
+  "generated_at": "2026-09-14T13:00:15+00:00",
   "projects": [
     {
       "id": "slots-mk",
@@ -1772,7 +1772,7 @@
     {
       "id": "zmiany-rozkladowe",
       "name": "Zmiany Rozkładowe",
-      "description": "Szczegóły w przygotowaniu.",
+      "description": "Utworzenie raportu / aplikacji, która będzie rozsyłała listę zmian wykonanych w ubiegłym tygodniu, z podziałem na kierunki zgodowe.",
       "status": "aktywny",
       "tech": [],
       "github": null,
