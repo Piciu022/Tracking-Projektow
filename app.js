@@ -130,13 +130,6 @@ function renderProjectCard(templates, project, summaryData, featuresData) {
   renderFeaturesBlock(article, templates.feature, featuresData);
   renderWaitingOn(article, featuresData);
 
-  const link = article.querySelector(".github-link");
-  if (project.github) {
-    link.href = `https://github.com/${project.github}`;
-  } else {
-    link.remove(); // panel ręczny, bez repo do podlinkowania
-  }
-
   return article;
 }
 
@@ -144,9 +137,7 @@ function renderFeedItem(template, item) {
   const node = template.content.cloneNode(true);
   const li = node.querySelector(".feed-item");
   li.querySelector(".feed-icon").textContent = item.type_icon;
-  const a = li.querySelector(".feed-subject");
-  a.textContent = item.subject;
-  a.href = item.url;
+  li.querySelector(".feed-subject").textContent = item.subject;
   const branchPart = item.branch_label ? ` · ${item.branch_label}` : "";
   li.querySelector(".feed-meta").textContent =
     `${item.project_name}${branchPart} · ${fmtDateTime(item.date)}`;
