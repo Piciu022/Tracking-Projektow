@@ -1,13 +1,20 @@
 # Tracking Projektów
 
 Prywatny dashboard dla szefa: co robię, w jakich projektach, i co się w nich ostatnio zmieniło.
-Statyczna strona (`index.html` + `style.css` + `app.js`), zero backendu. Dane (`data/activity.json`)
-generuje automatycznie GitHub Action, parsując historię commitów z repozytoriów wymienionych
-w [`projects.yaml`](projects.yaml) — **bez żadnego AI**, tylko konwencjonalne prefiksy commitów
-(`feat:`, `fix:`/`napraw:`, `eksperyment:`...) i grupowanie po branchach, z których zmiany zostały
-zmergowane.
+Statyczna strona (`index.html` + `style.css` + `app.js`), zero backendu.
+
+- **Surowe drzewo zmian** (`data/activity.json`) — generowane w pełni automatycznie przez GitHub
+  Action, **bez żadnego AI**: tylko konwencjonalne prefiksy commitów (`feat:`, `fix:`/`napraw:`,
+  `eksperyment:`...) i grupowanie po branchach, z których zmiany zostały zmergowane.
+- **Ludzkie podsumowania "Co nowego"** (`data/summaries.json`) — pisane raz w tygodniu, ręcznie
+  wyzwalane przez Piotra w Claude Code (bez klucza API, bez automatu w CI) — szczegóły w sekcji
+  poniżej i w [`CLAUDE.md`](CLAUDE.md).
 
 ## Jak to działa
+
+Dwie niezależne warstwy danych, obie kończą jako pliki JSON, oba czyta ta sama strona:
+
+**1. Automatyczna, surowa ("Szczegóły techniczne")**
 
 1. `projects.yaml` — lista śledzonych projektów (nazwa, opis, status, repo GitHub, branch).
 2. `scripts/update_data.py` — pobiera historię commitów przez GitHub API, rekonstruuje "drzewo"
@@ -15,8 +22,17 @@ zmergowane.
 3. `.github/workflows/update-dashboard.yml` — odpala skrypt codziennie o 5:00 UTC, ręcznie
    (przycisk "Run workflow"), i przy każdej zmianie `projects.yaml`; wynik commituje z powrotem
    do repo.
-4. `index.html` czyta `data/activity.json` i renderuje kafelki projektów + drzewo zmian + wspólny
-   feed aktywności.
+
+**2. Ręczna, ludzka ("Co nowego")**
+
+`data/summaries.json` — krótkie, pisane po ludzku podsumowania tygodnia, bez żadnego AI-w-CI i
+bez klucza API. Piotr raz w tygodniu (albo kiedy chce) mówi w Claude Code "zrób podsumowanie
+tygodnia" (albo `/podsumowanie`) — Claude czyta lokalną historię commitów, pisze podsumowanie,
+pokazuje do akceptacji i po OK commituje/pushuje. Cała procedura opisana w [`CLAUDE.md`](CLAUDE.md).
+
+`index.html` czyta oba pliki JSON i renderuje: kafelki projektów → sekcję "Co nowego" (jeśli
+istnieje podsumowanie) → zwijane "Szczegóły techniczne" z surowym drzewem → wspólny feed
+aktywności na dole strony.
 
 ## Wdrożenie od zera
 
