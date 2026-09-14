@@ -63,6 +63,12 @@ function renderFeature(template, feature) {
   li.querySelector(".feature-name").textContent = feature.name;
   li.querySelector(".feature-description").textContent = feature.description || "";
 
+  const statusEl = li.querySelector(".feature-status");
+  if (feature.status === "planowana") {
+    statusEl.hidden = false;
+    statusEl.textContent = "planowana";
+  }
+
   const addedList = li.querySelector(".feature-added");
   (feature.added || []).forEach((line) => {
     const item = document.createElement("li");

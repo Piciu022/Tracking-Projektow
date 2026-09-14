@@ -82,7 +82,13 @@
       "features": [
         {
           "name": "BaseMap",
-          "description": "Wizualizacja połączeń i lotnisk na mapie — punkt wyjścia do analizy codeshare.",
+          "description": "Analiza podpiętych rejsów.",
+          "added": []
+        },
+        {
+          "name": "Dopasowanie połączeń partnerskich",
+          "description": "Automatycznie pobiera rozkłady linii partnerskich i proponuje połączenie rejsu PLL LOT z dalszym rejsem linii partnerskiej, szukając najlepszej opcji z uwzględnieniem ograniczeń minimalnego czasu przesiadki (MCT).",
+          "status": "planowana",
           "added": []
         }
       ]
