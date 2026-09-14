@@ -142,12 +142,6 @@ body {
   font-weight: 500;
 }
 
-.last-activity {
-  margin: 0;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
 .summary-block {
   background: var(--accent-soft);
   border-radius: 10px;
@@ -228,10 +222,102 @@ body {
   color: var(--text);
 }
 
+.features-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.features-block[hidden] {
+  display: none;
+}
+
+.features-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.features-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature-item {
+  padding-left: 2px;
+}
+
+.feature-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.feature-bullet {
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+
+.feature-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.feature-description {
+  margin: 2px 0 0;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.feature-added {
+  list-style: none;
+  margin: 4px 0 0 14px;
+  padding: 0 0 0 12px;
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.feature-added li {
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+.feature-added li::before {
+  content: "– ";
+  color: var(--text-muted);
+}
+
+.waiting-on {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--amber-soft);
+  color: var(--amber);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+}
+
+.waiting-on[hidden] {
+  display: none;
+}
+
+.waiting-text {
+  color: var(--text);
+}
+
 .project-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 10px;
   margin-top: 4px;
 }
@@ -246,122 +332,23 @@ body {
   text-decoration: underline;
 }
 
-.toggle-tree {
-  font-size: 0.82rem;
-  color: var(--text);
-  background: var(--accent-soft);
-  border: none;
-  border-radius: 8px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-.toggle-tree:hover {
-  filter: brightness(1.05);
-}
-
-.tree-wrap {
-  border-top: 1px solid var(--border);
-  padding-top: 10px;
-  margin-top: 4px;
-}
-
-.tree {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.branch-toggle {
-  width: 100%;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
+.toggle-feed {
+  font-size: 0.85rem;
+  color: var(--text-muted);
   background: none;
   border: none;
-  text-align: left;
-  padding: 6px 4px;
-  cursor: pointer;
-  color: var(--text);
-  font-size: 0.88rem;
-  border-radius: 6px;
-}
-
-.branch-toggle:hover {
-  background: var(--accent-soft);
-}
-
-.branch-caret {
-  display: inline-block;
-  transition: transform 0.15s ease;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-}
-
-.branch-toggle[aria-expanded="true"] .branch-caret {
-  transform: rotate(90deg);
-}
-
-.branch-label {
-  font-weight: 600;
-  flex: 1;
-}
-
-.branch-meta {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.commit-list {
-  list-style: none;
-  margin: 2px 0 6px 26px;
   padding: 0;
-  border-left: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  cursor: pointer;
 }
 
-.commit-list[hidden] {
-  display: none;
-}
-
-.commit-item {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  padding: 3px 0 3px 12px;
-  font-size: 0.84rem;
-}
-
-.commit-subject {
+.toggle-feed:hover {
   color: var(--text);
-  text-decoration: none;
-  flex: 1;
-}
-
-.commit-subject:hover {
   text-decoration: underline;
-}
-
-.commit-date {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  white-space: nowrap;
-}
-
-.feed-section h2 {
-  font-size: 1.15rem;
-  margin: 0 0 14px;
 }
 
 .feed-list {
   list-style: none;
-  margin: 0;
+  margin: 10px 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -370,6 +357,10 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
+}
+
+.feed-list[hidden] {
+  display: none;
 }
 
 .feed-item {

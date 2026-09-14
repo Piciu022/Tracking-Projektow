@@ -11,21 +11,23 @@
   <header class="topbar">
     <div class="topbar-inner">
       <h1>Projekty</h1>
-      <p class="subtitle">Nad czym teraz pracuję i co ostatnio zmieniło się w każdym projekcie</p>
+      <p class="subtitle">Co robię i co te narzędzia potrafią</p>
     </div>
   </header>
 
   <main class="container">
     <section id="projects" class="projects-grid" aria-label="Projekty"></section>
 
-    <section class="feed-section" aria-label="Ostatnia aktywność">
-      <h2>Ostatnia aktywność (wszystkie projekty)</h2>
-      <ol id="feed" class="feed-list"></ol>
+    <section class="feed-section" aria-label="Surowa historia commitów">
+      <button class="toggle-feed" type="button" aria-expanded="false">
+        Szczegóły techniczne (surowe commity, wszystkie projekty) ▾
+      </button>
+      <ol id="feed" class="feed-list" hidden></ol>
     </section>
   </main>
 
   <footer class="footer">
-    <p>Dane generowane automatycznie z historii commitów na GitHubie. Nic tu nie jest pisane ręcznie.</p>
+    <p>Opisy projektów i funkcji pisane ręcznie. Historia commitów (w szczegółach technicznych) generowana automatycznie.</p>
   </footer>
 
   <template id="project-card-template">
@@ -36,7 +38,6 @@
       </div>
       <p class="project-description"></p>
       <div class="tech-chips"></div>
-      <p class="last-activity"></p>
 
       <div class="summary-block" hidden>
         <div class="summary-head">
@@ -51,33 +52,30 @@
         <ol class="older-summaries" hidden></ol>
       </div>
 
+      <div class="features-block" hidden>
+        <div class="features-title">🧩 Funkcje</div>
+        <ol class="features-list"></ol>
+      </div>
+
+      <div class="waiting-on" hidden>
+        <span class="waiting-icon">🚧</span>
+        <span class="waiting-text"></span>
+      </div>
+
       <div class="project-actions">
         <a class="github-link" target="_blank" rel="noopener">Repozytorium na GitHubie ↗</a>
-        <button class="toggle-tree" type="button" aria-expanded="false">Szczegóły techniczne (surowe commity) ▾</button>
-      </div>
-      <div class="tree-wrap" hidden>
-        <ol class="tree"></ol>
       </div>
     </article>
   </template>
 
-  <template id="branch-group-template">
-    <li class="branch-group">
-      <button class="branch-toggle" type="button" aria-expanded="false">
-        <span class="branch-caret">▸</span>
-        <span class="branch-icon"></span>
-        <span class="branch-label"></span>
-        <span class="branch-meta"></span>
-      </button>
-      <ol class="commit-list" hidden></ol>
-    </li>
-  </template>
-
-  <template id="commit-item-template">
-    <li class="commit-item">
-      <span class="commit-icon"></span>
-      <a class="commit-subject" target="_blank" rel="noopener"></a>
-      <span class="commit-date"></span>
+  <template id="feature-item-template">
+    <li class="feature-item">
+      <div class="feature-head">
+        <span class="feature-bullet">▪</span>
+        <span class="feature-name"></span>
+      </div>
+      <p class="feature-description"></p>
+      <ul class="feature-added"></ul>
     </li>
   </template>
 

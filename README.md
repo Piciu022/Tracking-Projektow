@@ -1,19 +1,23 @@
 # Tracking Projektów
 
-Publiczny dashboard: co robię, w jakich projektach, i co się w nich ostatnio zmieniło.
+Publiczne portfolio: jakie projekty robię i co potrafią — **nie** monitoring aktywności.
 Statyczna strona (`index.html` + `style.css` + `app.js`), zero backendu, zero kosztów.
 
 **To repo jest publiczne** (żeby GitHub Pages był darmowy i prosty), ale **kod źródłowy
 śledzonych projektów** (`Codeshare-assistant`, `Slots_Monitoring`, `Slots_MK`) **zostaje
 prywatny** — nigdy nie trafia tutaj. Wszystko, co widać na stronie, to ręcznie napisane
-podsumowania, nie surowy kod.
+opisy, nie surowy kod.
 
-- **Surowe drzewo zmian** (`data/activity.json`) — komunikaty commitów (nie treść zmian),
-  pogrupowane po branchach. Generowane skryptem, który czyta lokalne klony na dysku — **bez
-  żadnego AI, bez GitHub API, bez tokena**.
-- **Ludzkie podsumowania "Co nowego"** (`data/summaries.json`) — krótkie opisy pisane przez
-  Claude na polecenie Piotra w Claude Code, do przeczytania przez kogokolwiek bez znajomości
-  kodu. Też bez klucza API — to po prostu Claude piszący tekst w rozmowie.
+Trzy pliki danych, wszystkie w `data/`:
+
+- **`features.json`** — główna treść kafelka: lista funkcji projektu, każda z opisem i
+  opcjonalnym drzewkiem "co dodano", plus "na co czekam" jeśli coś blokuje. Pisane ręcznie
+  przez Claude na polecenie Piotra.
+- **`summaries.json`** — "Co nowego": krótka ludzka narracja tygodnia. Też ręczne.
+- **`activity.json`** — surowe drzewo commitów, generowane automatycznie skryptem czytającym
+  lokalne klony na dysku (**bez AI, bez GitHub API, bez tokena**). Na stronie widoczne tylko
+  jako zwinięte "Szczegóły techniczne" na samym dole — to materiał źródłowy do pisania
+  `features.json`/`summaries.json`, nie coś do oglądania przez szefa.
 
 Nic z tego nie działa automatycznie w tle — całość odpalana jest ręcznie, kiedy Piotr o to
 poprosi. Pełna procedura (co dokładnie robi Claude) jest w [`CLAUDE.md`](CLAUDE.md).

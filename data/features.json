@@ -1,0 +1,99 @@
+{
+  "projects": {
+    "slots-mk": {
+      "waiting_on": "",
+      "features": [
+        {
+          "name": "Porównanie zbiorów",
+          "description": "Porównuje dwie wersje pliku rozkładowego lub slotowego i pokazuje co się zmieniło, z klasyfikacją zmian według kodów IATA SCR.",
+          "added": [
+            "Podsumowanie według przewoźnika pokazuje teraz wszystkich przewoźników, nie tylko największych 9",
+            "Sloty na liście oczekującej wykluczone z porównania"
+          ]
+        },
+        {
+          "name": "WAW slots deepdive",
+          "description": "Analiza obłożenia limitów dzień/noc na Lotnisku Chopina na podstawie przyznanych slotów.",
+          "added": [
+            "Sloty na liście oczekującej wykluczone z liczenia limitów dzień/noc"
+          ]
+        },
+        {
+          "name": "Slots vs Schedule",
+          "description": "Ciągłe porównanie planu LOT (rozkładu) z faktycznie przyznanymi slotami — najbardziej rozbudowana część narzędzia.",
+          "added": [
+            "Pełny obraz koordynacji (rezerwacja / koordynacja / przydział) w szczegółach każdego wystąpienia"
+          ]
+        },
+        {
+          "name": "Outstation Slots",
+          "description": "Widok slotów na lotniskach docelowych, poza Warszawą.",
+          "added": []
+        },
+        {
+          "name": "NOTAM vs Rozkład",
+          "description": "Sprawdza aktualne NOTAMy na żywo względem rozkładu, z podglądem ad-hoc dla jednego lotniska.",
+          "added": [
+            "Filtr zakresu dat na wynikach",
+            "Widoczna pełna treść NOTAMu w tabeli wyników",
+            "Duże przyspieszenie działania (z ok. 45s do ok. 1,5s)"
+          ]
+        },
+        {
+          "name": "Archiwum",
+          "description": "Trwałe archiwum wgrywanych plików rozkładowych i slotowych.",
+          "added": [
+            "Hurtowy upload rozkładu i slotów zagranicznych w jednym miejscu"
+          ]
+        }
+      ]
+    },
+    "slots-monitoring": {
+      "waiting_on": "",
+      "features": [
+        {
+          "name": "Przegląd",
+          "description": "Filtrowalna lista wszystkich rejsów z kluczowymi wskaźnikami i najczęstszymi kodami opóźnień.",
+          "added": [
+            "Filtr 'Tylko wykonane rejsy' poprawnie ukrywa też odwołane i przekierowane, nie tylko skasowane",
+            "Filtr zakresu dat (kalendarz)",
+            "Filtr lotniska w dowolnym kierunku"
+          ]
+        },
+        {
+          "name": "Historia rejsu",
+          "description": "Wybór numeru rejsu → lista wystąpień (wylot/przylot osobno) → szczegóły kodów opóźnień → wykres trendu.",
+          "added": [
+            "Filtr zakresu dat (kalendarz)"
+          ]
+        },
+        {
+          "name": "Czasy blokowe",
+          "description": "Analiza różnicy między planowanym a faktycznym czasem blokowym — osobna miara od opóźnień.",
+          "added": [
+            "Nowa zakładka poświęcona analizie czasów blokowych",
+            "Sekcja wykrywająca rejsy z regularnie przekraczanym blokiem w obie strony"
+          ]
+        }
+      ]
+    },
+    "codeshare-assistant": {
+      "waiting_on": "",
+      "features": [
+        {
+          "name": "BaseMap",
+          "description": "Wizualizacja połączeń i lotnisk na mapie — punkt wyjścia do analizy codeshare.",
+          "added": []
+        }
+      ]
+    },
+    "zmiany-rozkladowe": {
+      "waiting_on": "",
+      "features": []
+    },
+    "avih-pnr-check": {
+      "waiting_on": "",
+      "features": []
+    }
+  }
+}

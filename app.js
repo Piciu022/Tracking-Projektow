@@ -1,5 +1,6 @@
 const DATA_URL = "data/activity.json";
 const SUMMARIES_URL = "data/summaries.json";
+const FEATURES_URL = "data/features.json";
 
 function fmtDate(iso) {
   if (!iso) return "";
@@ -17,48 +18,6 @@ function fmtDateTime(iso) {
     hour: "2-digit",
     minute: "2-digit",
   });
-}
-
-function relativeDays(iso) {
-  if (!iso) return "brak danych o commitach";
-  const diffMs = Date.now() - new Date(iso).getTime();
-  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  if (days <= 0) return "aktywność dzisiaj";
-  if (days === 1) return "ostatnia aktywność: wczoraj";
-  return `ostatnia aktywność: ${days} dni temu`;
-}
-
-function renderCommit(template, commit) {
-  const node = template.content.cloneNode(true);
-  const li = node.querySelector(".commit-item");
-  li.querySelector(".commit-icon").textContent = commit.type_icon;
-  const a = li.querySelector(".commit-subject");
-  a.textContent = commit.subject;
-  a.href = commit.url;
-  li.querySelector(".commit-date").textContent = fmtDate(commit.date);
-  return li;
-}
-
-function renderBranchGroup(groupTemplate, commitTemplate, group) {
-  const node = groupTemplate.content.cloneNode(true);
-  const li = node.querySelector(".branch-group");
-  const toggle = li.querySelector(".branch-toggle");
-  const list = li.querySelector(".commit-list");
-
-  li.querySelector(".branch-icon").textContent = group.icon;
-  li.querySelector(".branch-label").textContent = group.label;
-  li.querySelector(".branch-meta").textContent =
-    `${group.commits.length} commit(y) · ${fmtDate(group.merged_at)}`;
-
-  group.commits.forEach((c) => list.appendChild(renderCommit(commitTemplate, c)));
-
-  toggle.addEventListener("click", () => {
-    const expanded = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!expanded));
-    list.hidden = expanded;
-  });
-
-  return li;
 }
 
 function formatPeriod(start, end) {
@@ -110,7 +69,44 @@ function renderSummaryBlock(article, olderTemplate, summaryData) {
   }
 }
 
-function renderProjectCard(templates, project, summaryData) {
+function renderFeature(template, feature) {
+  const node = template.content.cloneNode(true);
+  const li = node.querySelector(".feature-item");
+  li.querySelector(".feature-name").textContent = feature.name;
+  li.querySelector(".feature-description").textContent = feature.description || "";
+
+  const addedList = li.querySelector(".feature-added");
+  (feature.added || []).forEach((line) => {
+    const item = document.createElement("li");
+    item.textContent = line;
+    addedList.appendChild(item);
+  });
+  if (!feature.added || !feature.added.length) {
+    addedList.remove();
+  }
+
+  return li;
+}
+
+function renderFeaturesBlock(article, featureTemplate, featuresData) {
+  const block = article.querySelector(".features-block");
+  if (!featuresData || !featuresData.features || !featuresData.features.length) {
+    return; // brak opisanych funkcji jeszcze - blok zostaje schowany
+  }
+  block.hidden = false;
+  const list = block.querySelector(".features-list");
+  featuresData.features.forEach((f) => list.appendChild(renderFeature(featureTemplate, f)));
+}
+
+function renderWaitingOn(article, featuresData) {
+  const waitingOn = featuresData && featuresData.waiting_on;
+  if (!waitingOn) return; // nic nie czeka - blok zostaje schowany
+  const block = article.querySelector(".waiting-on");
+  block.hidden = false;
+  block.querySelector(".waiting-text").textContent = waitingOn;
+}
+
+function renderProjectCard(templates, project, summaryData, featuresData) {
   const node = templates.card.content.cloneNode(true);
   const article = node.querySelector(".project-card");
 
@@ -130,9 +126,9 @@ function renderProjectCard(templates, project, summaryData) {
     chips.appendChild(span);
   });
 
-  article.querySelector(".last-activity").textContent = relativeDays(project.last_commit_at);
-
   renderSummaryBlock(article, templates.olderSummary, summaryData);
+  renderFeaturesBlock(article, templates.feature, featuresData);
+  renderWaitingOn(article, featuresData);
 
   const link = article.querySelector(".github-link");
   if (project.github) {
@@ -140,35 +136,6 @@ function renderProjectCard(templates, project, summaryData) {
   } else {
     link.remove(); // panel ręczny, bez repo do podlinkowania
   }
-
-  const toggleBtn = article.querySelector(".toggle-tree");
-  const treeWrap = article.querySelector(".tree-wrap");
-  const tree = article.querySelector(".tree");
-
-  if (project.error) {
-    const p = document.createElement("p");
-    p.className = "error-state";
-    p.textContent = project.error;
-    tree.appendChild(p);
-  } else if (!project.groups.length) {
-    const p = document.createElement("p");
-    p.className = "empty-state";
-    p.textContent = "Brak zarejestrowanych zmian.";
-    tree.appendChild(p);
-  } else {
-    project.groups.forEach((g) => {
-      tree.appendChild(renderBranchGroup(templates.branch, templates.commit, g));
-    });
-  }
-
-  toggleBtn.addEventListener("click", () => {
-    const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
-    toggleBtn.setAttribute("aria-expanded", String(!expanded));
-    treeWrap.hidden = expanded;
-    toggleBtn.textContent = expanded
-      ? "Szczegóły techniczne (surowe commity) ▾"
-      : "Zwiń szczegóły techniczne ▴";
-  });
 
   return article;
 }
@@ -186,6 +153,16 @@ function renderFeedItem(template, item) {
   return li;
 }
 
+async function fetchJsonSafe(url, fallback) {
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (res.ok) return await res.json();
+  } catch (err) {
+    console.warn(`Nie udało się wczytać ${url}:`, err);
+  }
+  return fallback;
+}
+
 async function main() {
   const projectsEl = document.getElementById("projects");
   const feedEl = document.getElementById("feed");
@@ -200,26 +177,21 @@ async function main() {
     return;
   }
 
-  // Podsumowania tygodniowe są opcjonalne i pisane ręcznie (patrz CLAUDE.md) - ich brak albo
-  // błąd wczytania nie może wywalić reszty strony.
-  let summaries = { projects: {} };
-  try {
-    const res = await fetch(SUMMARIES_URL, { cache: "no-store" });
-    if (res.ok) summaries = await res.json();
-  } catch (err) {
-    console.warn(`Nie udało się wczytać ${SUMMARIES_URL}:`, err);
-  }
+  // Podsumowania i opisy funkcji są opcjonalne i pisane ręcznie (patrz CLAUDE.md) - ich brak
+  // albo błąd wczytania nie może wywalić reszty strony.
+  const summaries = await fetchJsonSafe(SUMMARIES_URL, { projects: {} });
+  const features = await fetchJsonSafe(FEATURES_URL, { projects: {} });
 
   const templates = {
     card: document.getElementById("project-card-template"),
-    branch: document.getElementById("branch-group-template"),
-    commit: document.getElementById("commit-item-template"),
+    feature: document.getElementById("feature-item-template"),
     olderSummary: document.getElementById("older-summary-template"),
   };
 
   data.projects.forEach((p) => {
     const summaryData = summaries.projects && summaries.projects[p.id];
-    projectsEl.appendChild(renderProjectCard(templates, p, summaryData));
+    const featuresData = features.projects && features.projects[p.id];
+    projectsEl.appendChild(renderProjectCard(templates, p, summaryData, featuresData));
   });
 
   const feedTemplate = document.getElementById("feed-item-template");
@@ -228,6 +200,16 @@ async function main() {
   } else {
     data.feed.forEach((item) => feedEl.appendChild(renderFeedItem(feedTemplate, item)));
   }
+
+  const feedToggle = document.querySelector(".toggle-feed");
+  feedToggle.addEventListener("click", () => {
+    const expanded = feedToggle.getAttribute("aria-expanded") === "true";
+    feedToggle.setAttribute("aria-expanded", String(!expanded));
+    feedEl.hidden = expanded;
+    feedToggle.textContent = expanded
+      ? "Szczegóły techniczne (surowe commity, wszystkie projekty) ▾"
+      : "Zwiń szczegóły techniczne ▴";
+  });
 }
 
 main();
