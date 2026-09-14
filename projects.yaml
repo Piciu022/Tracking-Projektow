@@ -1,5 +1,9 @@
 # Lista śledzonych projektów. Dodanie nowego projektu = dodanie kolejnego wpisu tutaj
 # (repo może być prywatne albo publiczne - liczy się tylko dostęp tokena z sekretu REPOS_TOKEN).
+#
+# local_path: ścieżka na tym Macu do lokalnego klonu - używana WYŁĄCZNIE przy ręcznym
+# tygodniowym podsumowaniu (patrz CLAUDE.md). Skrypt scripts/update_data.py (GitHub Action)
+# jej nie czyta - on i tak pyta GitHub API, więc ten klucz jest dla niego neutralny.
 projects:
   - id: notam-reader
     name: "NOTAM Reader"
@@ -12,6 +16,7 @@ projects:
     github: "Piciu022/NOTAM-READER"
     branch: "main"
     history_limit: 100
+    local_path: "../NOTAM READER"
 
   - id: codeshare-assistant
     name: "Codeshare Assistant"
@@ -24,6 +29,7 @@ projects:
     github: "Piciu022/Codeshare-assistant"
     branch: "main"
     history_limit: 100
+    local_path: "../Codeshare"
 
   - id: slots-monitoring
     name: "Slots Monitoring (DOR App)"
@@ -35,6 +41,7 @@ projects:
     github: "Piciu022/Slots_Monitoring"
     branch: "dev"
     history_limit: 100
+    local_path: "../Slots_Monitoring"
 
   - id: slots-mk
     name: "Slots MK"
@@ -48,3 +55,4 @@ projects:
     github: "Piciu022/Slots_MK"
     branch: "main"
     history_limit: 100
+    local_path: "../Slots_MK/app"

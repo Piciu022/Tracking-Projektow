@@ -1,4 +1,5 @@
 const DATA_URL = "data/activity.json";
+const SUMMARIES_URL = "data/summaries.json";
 
 function fmtDate(iso) {
   if (!iso) return "";
@@ -60,7 +61,56 @@ function renderBranchGroup(groupTemplate, commitTemplate, group) {
   return li;
 }
 
-function renderProjectCard(templates, project) {
+function formatPeriod(start, end) {
+  if (!start && !end) return "";
+  if (start === end || !end) return fmtDate(start);
+  return `${fmtDate(start)} – ${fmtDate(end)}`;
+}
+
+function renderOlderSummary(template, entry) {
+  const node = template.content.cloneNode(true);
+  const li = node.querySelector(".older-summary-item");
+  li.querySelector(".older-summary-period").textContent = formatPeriod(
+    entry.period_start,
+    entry.period_end
+  );
+  li.querySelector(".older-summary-text").textContent = entry.summary;
+  return li;
+}
+
+function renderSummaryBlock(article, olderTemplate, summaryData) {
+  const block = article.querySelector(".summary-block");
+  if (!summaryData || !summaryData.entries || !summaryData.entries.length) {
+    return; // brak podsumowań dla tego projektu - blok zostaje schowany (hidden z HTML)
+  }
+
+  const [latest, ...older] = summaryData.entries;
+  block.hidden = false;
+  block.querySelector(".summary-period").textContent = formatPeriod(
+    latest.period_start,
+    latest.period_end
+  );
+  block.querySelector(".summary-text").textContent = latest.summary;
+
+  if (older.length) {
+    const olderToggle = block.querySelector(".toggle-older-summaries");
+    const olderList = block.querySelector(".older-summaries");
+    olderToggle.hidden = false;
+    olderToggle.textContent = `Starsze podsumowania (${older.length}) ▾`;
+    older.forEach((entry) => olderList.appendChild(renderOlderSummary(olderTemplate, entry)));
+
+    olderToggle.addEventListener("click", () => {
+      const expanded = olderToggle.getAttribute("aria-expanded") === "true";
+      olderToggle.setAttribute("aria-expanded", String(!expanded));
+      olderList.hidden = expanded;
+      olderToggle.textContent = expanded
+        ? `Starsze podsumowania (${older.length}) ▾`
+        : "Zwiń starsze podsumowania ▴";
+    });
+  }
+}
+
+function renderProjectCard(templates, project, summaryData) {
   const node = templates.card.content.cloneNode(true);
   const article = node.querySelector(".project-card");
 
@@ -81,6 +131,8 @@ function renderProjectCard(templates, project) {
   });
 
   article.querySelector(".last-activity").textContent = relativeDays(project.last_commit_at);
+
+  renderSummaryBlock(article, templates.olderSummary, summaryData);
 
   const link = article.querySelector(".github-link");
   link.href = `https://github.com/${project.github}`;
@@ -109,7 +161,9 @@ function renderProjectCard(templates, project) {
     const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
     toggleBtn.setAttribute("aria-expanded", String(!expanded));
     treeWrap.hidden = expanded;
-    toggleBtn.textContent = expanded ? "Pokaż drzewo zmian ▾" : "Zwiń drzewo zmian ▴";
+    toggleBtn.textContent = expanded
+      ? "Szczegóły techniczne (surowe commity) ▾"
+      : "Zwiń szczegóły techniczne ▴";
   });
 
   return article;
@@ -144,15 +198,29 @@ async function main() {
     return;
   }
 
+  // Podsumowania tygodniowe są opcjonalne i pisane ręcznie (patrz CLAUDE.md) - ich brak albo
+  // błąd wczytania nie może wywalić reszty strony.
+  let summaries = { projects: {} };
+  try {
+    const res = await fetch(SUMMARIES_URL, { cache: "no-store" });
+    if (res.ok) summaries = await res.json();
+  } catch (err) {
+    console.warn(`Nie udało się wczytać ${SUMMARIES_URL}:`, err);
+  }
+
   updatedAtEl.textContent = `Ostatnia aktualizacja: ${fmtDateTime(data.generated_at)}`;
 
   const templates = {
     card: document.getElementById("project-card-template"),
     branch: document.getElementById("branch-group-template"),
     commit: document.getElementById("commit-item-template"),
+    olderSummary: document.getElementById("older-summary-template"),
   };
 
-  data.projects.forEach((p) => projectsEl.appendChild(renderProjectCard(templates, p)));
+  data.projects.forEach((p) => {
+    const summaryData = summaries.projects && summaries.projects[p.id];
+    projectsEl.appendChild(renderProjectCard(templates, p, summaryData));
+  });
 
   const feedTemplate = document.getElementById("feed-item-template");
   if (!data.feed.length) {

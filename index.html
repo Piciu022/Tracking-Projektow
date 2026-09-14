@@ -38,9 +38,23 @@
       <p class="project-description"></p>
       <div class="tech-chips"></div>
       <p class="last-activity"></p>
+
+      <div class="summary-block" hidden>
+        <div class="summary-head">
+          <span class="summary-icon">📋</span>
+          <span class="summary-title">Co nowego</span>
+          <span class="summary-period"></span>
+        </div>
+        <p class="summary-text"></p>
+        <button class="toggle-older-summaries" type="button" aria-expanded="false" hidden>
+          Starsze podsumowania ▾
+        </button>
+        <ol class="older-summaries" hidden></ol>
+      </div>
+
       <div class="project-actions">
         <a class="github-link" target="_blank" rel="noopener">Repozytorium na GitHubie ↗</a>
-        <button class="toggle-tree" type="button" aria-expanded="false">Pokaż drzewo zmian ▾</button>
+        <button class="toggle-tree" type="button" aria-expanded="false">Szczegóły techniczne (surowe commity) ▾</button>
       </div>
       <div class="tree-wrap" hidden>
         <ol class="tree"></ol>
@@ -65,6 +79,13 @@
       <span class="commit-icon"></span>
       <a class="commit-subject" target="_blank" rel="noopener"></a>
       <span class="commit-date"></span>
+    </li>
+  </template>
+
+  <template id="older-summary-template">
+    <li class="older-summary-item">
+      <span class="older-summary-period"></span>
+      <p class="older-summary-text"></p>
     </li>
   </template>
 
