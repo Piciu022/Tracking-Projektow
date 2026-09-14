@@ -39,14 +39,15 @@ git push -u origin main
 
 ### 2. Token do odczytu prywatnych repo (`REPOS_TOKEN`)
 
-Action potrzebuje dostępu do historii commitów `Codeshare-assistant` i `Slots_Monitoring`
-(są prywatne — `NOTAM-READER` jest publiczne, dla niego token nie jest wymagany).
+Action potrzebuje dostępu do historii commitów `Codeshare-assistant`, `Slots_Monitoring` i
+`Slots_MK` (są prywatne — `NOTAM-READER` jest publiczne, dla niego token nie jest wymagany).
 
 1. GitHub → Settings → Developer settings → **Personal access tokens → Fine-grained tokens**
    → *Generate new token*.
 2. *Resource owner*: Twoje konto (`Piciu022`).
-3. *Repository access*: **Only select repositories** → wybierz `Codeshare-assistant` i
-   `Slots_Monitoring` (i każde kolejne prywatne repo, które dodasz do `projects.yaml`).
+3. *Repository access*: **Only select repositories** → wybierz `Codeshare-assistant`,
+   `Slots_Monitoring` i `Slots_MK` (i każde kolejne prywatne repo, które dodasz do
+   `projects.yaml`).
 4. *Permissions* → **Contents: Read-only** (to wystarczy, żeby czytać commity).
 5. Wygeneruj token, skopiuj go.
 6. W repo `Tracking-Projektow` na GitHubie: **Settings → Secrets and variables → Actions →
@@ -108,6 +109,10 @@ ukrywane, prefiksy tylko dobierają ikonkę.
 Grupowanie w gałęzie działa automatycznie na podstawie commitów merge (`Merge branch 'feature/x'
 do dev` albo `Merge pull request #N from .../nazwa-brancha`) — nie trzeba nic konfigurować, wynika
 z tego, jak i tak już pracujesz na branchach `feature/...`, `fix/...`, `eksperyment/...`.
+
+Projekt bez takich merge commitów (np. `Slots_MK`, gdzie commity idą wprost na `main`/`dev` jako
+`Etap N: ...`) po prostu wyląduje jako jedna płaska lista "Najnowsze zmiany" — wciąż automatyczne
+i wciąż użyteczne, tylko bez podziału na gałęzie.
 
 ## Test lokalny
 

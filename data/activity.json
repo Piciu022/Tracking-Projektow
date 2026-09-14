@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-14T11:07:21+00:00",
+  "generated_at": "2026-09-14T11:15:02+00:00",
   "projects": [
     {
       "id": "notam-reader",
@@ -87,6 +87,22 @@
       ],
       "github": "Piciu022/Slots_Monitoring",
       "branch": "dev",
+      "last_commit_at": null,
+      "groups": [],
+      "error": "Brak dostępu do historii commitów (sprawdź REPOS_TOKEN / uprawnienia)."
+    },
+    {
+      "id": "slots-mk",
+      "name": "Slots MK",
+      "description": "Narzędzie dla działu koordynacji slotów LOT/WAW: porównywanie wersji plików rozkładowych i slotowych (klasyfikacja zmian wg kodów IATA SCR), analiza obłożenia limitów dzień/noc na WAW, ciągłe porównanie planu LOT z faktycznie przyznanymi slotami (Outstation Slots), sprawdzanie NOTAM na żywo vs rozkład, trwałe archiwum plików.\n",
+      "status": "aktywny",
+      "tech": [
+        "Python",
+        "Streamlit",
+        "Databricks Apps"
+      ],
+      "github": "Piciu022/Slots_MK",
+      "branch": "main",
       "last_commit_at": null,
       "groups": [],
       "error": "Brak dostępu do historii commitów (sprawdź REPOS_TOKEN / uprawnienia)."

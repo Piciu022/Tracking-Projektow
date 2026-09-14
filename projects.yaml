@@ -35,3 +35,16 @@ projects:
     github: "Piciu022/Slots_Monitoring"
     branch: "dev"
     history_limit: 100
+
+  - id: slots-mk
+    name: "Slots MK"
+    description: >
+      Narzędzie dla działu koordynacji slotów LOT/WAW: porównywanie wersji plików
+      rozkładowych i slotowych (klasyfikacja zmian wg kodów IATA SCR), analiza obłożenia
+      limitów dzień/noc na WAW, ciągłe porównanie planu LOT z faktycznie przyznanymi slotami
+      (Outstation Slots), sprawdzanie NOTAM na żywo vs rozkład, trwałe archiwum plików.
+    status: aktywny
+    tech: ["Python", "Streamlit", "Databricks Apps"]
+    github: "Piciu022/Slots_MK"
+    branch: "main"
+    history_limit: 100
