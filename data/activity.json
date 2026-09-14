@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-14T12:40:42+00:00",
+  "generated_at": "2026-09-14T12:51:07+00:00",
   "projects": [
     {
       "id": "slots-mk",
-      "name": "Slots MK",
+      "name": "Slots Tracker",
       "description": "Narzędzie dla działu koordynacji slotów LOT/WAW: porównywanie wersji plików rozkładowych i slotowych (klasyfikacja zmian wg kodów IATA SCR), analiza obłożenia limitów dzień/noc na WAW, ciągłe porównanie planu LOT z faktycznie przyznanymi slotami (Outstation Slots), sprawdzanie NOTAM na żywo vs rozkład, trwałe archiwum plików.",
       "status": "aktywny",
       "tech": [
@@ -1795,7 +1795,7 @@
   "feed": [
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "32bc977a721e26daba575aefbb73909a31c82156",
       "short_sha": "32bc977",
@@ -1809,7 +1809,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "131f7c2bab2439739211aff836ecbf20a9984d9b",
       "short_sha": "131f7c2",
@@ -1823,7 +1823,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "5a9686fa1d76dbfb4ba602e803b145fe64aec3c5",
       "short_sha": "5a9686f",
@@ -1837,7 +1837,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "2d8fbae0188e079cd5038d9c58fc66a307df362c",
       "short_sha": "2d8fbae",
@@ -1851,7 +1851,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "24c16fa712613b9ccb3b49a678c87434416d6c95",
       "short_sha": "24c16fa",
@@ -1865,7 +1865,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "37d950f74e8b9e6b6c6ac11d96d8603c2ee8e42e",
       "short_sha": "37d950f",
@@ -1879,7 +1879,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "47d47e521d8b845d07513c31b5e70d03e67fc08f",
       "short_sha": "47d47e5",
@@ -1893,7 +1893,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "c6d43b8cfc344a0709232e04617ee246ec496383",
       "short_sha": "c6d43b8",
@@ -2215,7 +2215,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "5bfe53502874594bc4cee0185ce71fe8a8b8c4a9",
       "short_sha": "5bfe535",
@@ -2229,7 +2229,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "b59f500f1f38a434499767790cd1d77d3f491bc5",
       "short_sha": "b59f500",
@@ -2243,7 +2243,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "d5d262d16499e0bb889e3a635fbb9d77047704e1",
       "short_sha": "d5d262d",
@@ -2257,7 +2257,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "e1d210321983413a08a7ea8874ca3decf9acc6a8",
       "short_sha": "e1d2103",
@@ -2271,7 +2271,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "9ae70d5d44a3dd01824e794910c24c80ea371427",
       "short_sha": "9ae70d5",
@@ -2285,7 +2285,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "523fd0c448df4950b259ec91f958ecaa49d7e845",
       "short_sha": "523fd0c",
@@ -2299,7 +2299,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "6edfefcf3ea303c5a7615f0afdbbdc8816e2f402",
       "short_sha": "6edfefc",
@@ -2327,7 +2327,7 @@
     },
     {
       "project_id": "slots-mk",
-      "project_name": "Slots MK",
+      "project_name": "Slots Tracker",
       "branch_label": null,
       "sha": "7b2a22ffa894f9755dac46ce306b7ac1ebdf9a46",
       "short_sha": "7b2a22f",

@@ -34,7 +34,7 @@ projects:
     local_path: "../Slots_Monitoring"
 
   - id: slots-mk
-    name: "Slots MK"
+    name: "Slots Tracker"
     description: >
       Narzędzie dla działu koordynacji slotów LOT/WAW: porównywanie wersji plików
       rozkładowych i slotowych (klasyfikacja zmian wg kodów IATA SCR), analiza obłożenia
