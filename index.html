@@ -17,17 +17,10 @@
 
   <main class="container">
     <section id="projects" class="projects-grid" aria-label="Projekty"></section>
-
-    <section class="feed-section" aria-label="Surowa historia commitów">
-      <button class="toggle-feed" type="button" aria-expanded="false">
-        Szczegóły techniczne (surowe commity, wszystkie projekty) ▾
-      </button>
-      <ol id="feed" class="feed-list" hidden></ol>
-    </section>
   </main>
 
   <footer class="footer">
-    <p>Opisy projektów i funkcji pisane ręcznie. Historia commitów (w szczegółach technicznych) generowana automatycznie.</p>
+    <p>Opisy projektów i funkcji pisane ręcznie.</p>
   </footer>
 
   <template id="project-card-template">
@@ -79,16 +72,6 @@
     <li class="older-summary-item">
       <span class="older-summary-period"></span>
       <p class="older-summary-text"></p>
-    </li>
-  </template>
-
-  <template id="feed-item-template">
-    <li class="feed-item">
-      <span class="feed-icon"></span>
-      <div class="feed-body">
-        <span class="feed-subject"></span>
-        <div class="feed-meta"></div>
-      </div>
     </li>
   </template>
 

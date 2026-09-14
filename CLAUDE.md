@@ -25,9 +25,9 @@ prezentacja tego, co Piotr zbudował, nie jak podgląd na ręce. Priorytet dla k
    surowe commity.
 4. "Na co czekam" — jeśli coś blokuje Piotra, jedno zdanie (`waiting_on` w `data/features.json`).
 
-Surowe drzewo commitów (`data/activity.json`) istnieje dalej, ale jest **zwinięte na dole całej
-strony** jako "Szczegóły techniczne" — nie per-projekt, nie rozwinięte. To głównie materiał
-źródłowy dla Ciebie (do pisania Kroku B/B2), nie coś, co Piotr chce eksponować.
+Surowe drzewo commitów (`data/activity.json`) **nigdzie na stronie się nie wyświetla** —
+istnieje wyłącznie jako materiał źródłowy dla Ciebie (do pisania Kroku B/B2). Piotr wyraźnie nie
+chce widoku "kto kiedy co robił" nawet w zwiniętej formie.
 
 Kod źródłowy śledzonych projektów jest **prywatny** — ten dashboard (repo `Tracking-Projektow`)
 jest **publiczny**. Nigdy nie kopiuj tu surowego kodu, treści plików, pełnych diffów, nazw
@@ -41,9 +41,9 @@ cd "/Users/piotradamski/Programowanie/lot/Tracking-Projektów"
 python3 scripts/update_data.py
 ```
 
-Skrypt czyta `projects.yaml` i lokalne klony (`local_path`) — bez sieci, bez tokena. To materiał
-źródłowy do Kroków B/B2 (i surowy fallback w zwiniętych "Szczegółach technicznych"), nie coś do
-pokazywania per-projekt.
+Skrypt czyta `projects.yaml` i lokalne klony (`local_path`) — bez sieci, bez tokena. Dostarcza
+też podstawowe metadane kafelka (nazwa/opis/status/tech), ale jego pole `groups` (surowe
+commity) to wyłącznie materiał źródłowy do Kroków B/B2 — nigdzie się nie wyświetla.
 
 ## Krok B — napisz ludzkie podsumowanie ("Co nowego")
 

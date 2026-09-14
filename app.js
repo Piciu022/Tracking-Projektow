@@ -8,18 +8,6 @@ function fmtDate(iso) {
   return d.toLocaleDateString("pl-PL", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
 
-function fmtDateTime(iso) {
-  if (!iso) return "";
-  const d = new Date(iso);
-  return d.toLocaleString("pl-PL", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
 function formatPeriod(start, end) {
   if (!start && !end) return "";
   if (start === end || !end) return fmtDate(start);
@@ -133,17 +121,6 @@ function renderProjectCard(templates, project, summaryData, featuresData) {
   return article;
 }
 
-function renderFeedItem(template, item) {
-  const node = template.content.cloneNode(true);
-  const li = node.querySelector(".feed-item");
-  li.querySelector(".feed-icon").textContent = item.type_icon;
-  li.querySelector(".feed-subject").textContent = item.subject;
-  const branchPart = item.branch_label ? ` · ${item.branch_label}` : "";
-  li.querySelector(".feed-meta").textContent =
-    `${item.project_name}${branchPart} · ${fmtDateTime(item.date)}`;
-  return li;
-}
-
 async function fetchJsonSafe(url, fallback) {
   try {
     const res = await fetch(url, { cache: "no-store" });
@@ -156,8 +133,9 @@ async function fetchJsonSafe(url, fallback) {
 
 async function main() {
   const projectsEl = document.getElementById("projects");
-  const feedEl = document.getElementById("feed");
 
+  // data/activity.json dostarcza tylko podstawowe metadane projektu (nazwa/opis/status/tech) -
+  // jego surowa historia commitów nie jest już nigdzie na stronie renderowana (patrz CLAUDE.md).
   let data;
   try {
     const res = await fetch(DATA_URL, { cache: "no-store" });
@@ -183,23 +161,6 @@ async function main() {
     const summaryData = summaries.projects && summaries.projects[p.id];
     const featuresData = features.projects && features.projects[p.id];
     projectsEl.appendChild(renderProjectCard(templates, p, summaryData, featuresData));
-  });
-
-  const feedTemplate = document.getElementById("feed-item-template");
-  if (!data.feed.length) {
-    feedEl.innerHTML = '<li class="empty-state">Brak ostatniej aktywności.</li>';
-  } else {
-    data.feed.forEach((item) => feedEl.appendChild(renderFeedItem(feedTemplate, item)));
-  }
-
-  const feedToggle = document.querySelector(".toggle-feed");
-  feedToggle.addEventListener("click", () => {
-    const expanded = feedToggle.getAttribute("aria-expanded") === "true";
-    feedToggle.setAttribute("aria-expanded", String(!expanded));
-    feedEl.hidden = expanded;
-    feedToggle.textContent = expanded
-      ? "Szczegóły techniczne (surowe commity, wszystkie projekty) ▾"
-      : "Zwiń szczegóły techniczne ▴";
   });
 }
 

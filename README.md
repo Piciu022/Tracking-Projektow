@@ -14,10 +14,10 @@ Trzy pliki danych, wszystkie w `data/`:
   opcjonalnym drzewkiem "co dodano", plus "na co czekam" jeśli coś blokuje. Pisane ręcznie
   przez Claude na polecenie Piotra.
 - **`summaries.json`** — "Co nowego": krótka ludzka narracja tygodnia. Też ręczne.
-- **`activity.json`** — surowe drzewo commitów, generowane automatycznie skryptem czytającym
-  lokalne klony na dysku (**bez AI, bez GitHub API, bez tokena**). Na stronie widoczne tylko
-  jako zwinięte "Szczegóły techniczne" na samym dole — to materiał źródłowy do pisania
-  `features.json`/`summaries.json`, nie coś do oglądania przez szefa.
+- **`activity.json`** — podstawowe metadane kafelka (nazwa/opis/status/tech) plus surowe drzewo
+  commitów, generowane automatycznie skryptem czytającym lokalne klony na dysku (**bez AI, bez
+  GitHub API, bez tokena**). Drzewo commitów **nigdzie na stronie się nie wyświetla** — to
+  wyłącznie materiał źródłowy do pisania `features.json`/`summaries.json`.
 
 Nic z tego nie działa automatycznie w tle — całość odpalana jest ręcznie, kiedy Piotr o to
 poprosi. Pełna procedura (co dokładnie robi Claude) jest w [`CLAUDE.md`](CLAUDE.md).
