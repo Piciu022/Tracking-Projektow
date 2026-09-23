@@ -11,9 +11,9 @@ projects:
   - id: codeshare-assistant
     name: "Codeshare Assistant"
     description: >
-      Aplikacja Streamlit (Databricks App) do analizy połączeń codeshare. Obecnie mapa bazowa
-      (BaseMap), w planach słownik minimalnych czasów przesiadki i automatyczne dopasowywanie
-      połączeń.
+      Aplikacja Streamlit (Databricks App) do analizy połączeń codeshare — trzy zakładki:
+      BaseMap, Conflict Handler i Ustawienia, z żywym połączeniem do rozkładu partnerskiego i
+      rozkładu LOT.
     status: aktywny
     tech: ["Python", "Streamlit", "Databricks Apps"]
     github: "Piciu022/Codeshare-assistant"

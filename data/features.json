@@ -78,7 +78,7 @@
       ]
     },
     "codeshare-assistant": {
-      "waiting_on": "",
+      "waiting_on": "Zapytanie do rozkładu LOT jest na razie wolne (kilkadziesiąt sekund na wczytanie) — czeka na zmianę techniczną po stronie właściciela tych danych w Databricks.",
       "features": [
         {
           "name": "BaseMap",
@@ -86,10 +86,14 @@
           "added": []
         },
         {
-          "name": "Dopasowanie połączeń partnerskich",
-          "description": "Automatycznie pobiera rozkłady linii partnerskich i proponuje połączenie rejsu PLL LOT z dalszym rejsem linii partnerskiej, szukając najlepszej opcji z uwzględnieniem ograniczeń minimalnego czasu przesiadki (MCT).",
-          "status": "planowana",
-          "added": []
+          "name": "Conflict Handler",
+          "description": "Wgrywasz raport zmian rejsów partnerskich (Conflict Handler NonOp Report) — appka sama znajduje, na jaki rejs LOT można się przełączyć przed i po, z zachowaniem bezpiecznego minimalnego czasu przesiadki (MCT).",
+          "added": [
+            "Rozkład partnerski i rozkład LOT dociągane na żywo z Databricks, bez ręcznego wgrywania drugiej strony",
+            "Wyszukiwanie zawężone do potrzebnych lotnisk i sensownego horyzontu czasowego",
+            "Okno wyszukiwania przesiadek konfigurowalne w zakładce Ustawienia",
+            "Wbudowana, bezpieczna reguła MCT — nigdy nie proponuje zbyt ciasnej przesiadki"
+          ]
         }
       ]
     },

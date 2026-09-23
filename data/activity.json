@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T10:30:00+00:00",
+  "generated_at": "2026-09-23T10:34:36+00:00",
   "projects": [
     {
       "id": "slots-monitoring",
@@ -1830,7 +1830,7 @@
     {
       "id": "codeshare-assistant",
       "name": "Codeshare Assistant",
-      "description": "Aplikacja Streamlit (Databricks App) do analizy połączeń codeshare. Obecnie mapa bazowa (BaseMap), w planach słownik minimalnych czasów przesiadki i automatyczne dopasowywanie połączeń.",
+      "description": "Aplikacja Streamlit (Databricks App) do analizy połączeń codeshare — trzy zakładki: BaseMap, Conflict Handler i Ustawienia, z żywym połączeniem do rozkładu partnerskiego i rozkładu LOT.",
       "status": "aktywny",
       "tech": [
         "Python",
