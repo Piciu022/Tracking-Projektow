@@ -99,7 +99,13 @@
     },
     "avih-pnr-check": {
       "waiting_on": "",
-      "features": []
+      "features": [
+        {
+          "name": "Codzienna kontrola PNR vs samolot",
+          "description": "Pipeline codziennie o 5:00 rano pobiera rezerwacje z PNR i sprawdza, na jakim egzemplarzu samolotu zostanie wykonany rejs. Jeśli to egzemplarz bez wentylacji luku bagażowego, rejs zapisywany jest do tabeli do dalszej weryfikacji.",
+          "added": []
+        }
+      ]
     }
   }
 }

@@ -61,6 +61,7 @@ projects:
   - id: avih-pnr-check
     name: "AVIH / PNR - Check"
     description: >
-      Szczegóły w przygotowaniu.
+      Automatyczna kontrola rejsów z przewożonymi zwierzętami (AVIH) pod kątem tego, czy
+      przydzielony samolot ma wentylację luku bagażowego.
     status: aktywny
     tech: []
